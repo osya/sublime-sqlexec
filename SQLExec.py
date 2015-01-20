@@ -37,7 +37,11 @@ class Connection:
         tables = []
         for result in command.run().splitlines():
             try:
-                tables.append(result.split('|')[1].strip())
+                schema = result.split('|')[0].strip()
+                table = result.split('|')[1].strip()
+                if schema:
+                    table = schema + '.' + table
+                tables.append(table)
             except IndexError:
                 pass
 
